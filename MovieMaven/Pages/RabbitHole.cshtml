@@ -1,0 +1,297 @@
+﻿@page
+@model MovieMaven.Pages.RabbitHoleModel
+
+
+
+<div id="cast">
+    <div class="headingResults">
+        @for (int i = 0; i < Model.names.Count && i < Model.movieIDs.Count && i < 1; i++)
+        {
+            @if (Model.names[i] != null)
+            {
+                <h2>Actors</h2>
+                <hr class="myLine" width=100%>
+            }
+        }
+
+    </div>
+    <form method="post" asp-page-handler="ActorInfo" style="text-align:center; padding-left: 50px;">
+        <!-- use this for the URL: https://image.tmdb.org/t/p/w500/ -->
+        @for (int i = 0; i < Model.picsOfActors.Count; i++)
+        {
+            @if (Model.picsOfActors[i] != null)
+            {
+                <div class="bill">
+
+                    <div class="stackTop">
+                        <img class="pics" src="https://image.tmdb.org/t/p/w500/@Model.picsOfActors[i]" />
+                    </div>
+                    <div class="stackBottom">
+                        <button class="overlayBtn" type="submit" name="actorID" value="@Model.actorIDs[i]">
+                            <h4>@Model.names[i]</h4>
+                        </button>
+
+                    </div>
+
+                </div>
+            }
+            else
+            {
+                <div class="bill">
+                    <div class="stackTop">
+                        <img class="pics" src="~/images/noimage.png" style="background-color: dimgray" />
+                    </div>
+                    <div class="stackBottom">
+                        <button class="overlayBtn" type="submit" name="actorID" value="@Model.actorIDs[i]">
+                            <h4>@Model.names[i]</h4>
+                        </button>
+                    </div>
+                </div>
+            }// inner if
+        } <!-- for -->
+    </form>
+</div> <!-- Actor search display section -->
+
+
+<div class="posters">
+    <div class="headingResults">
+        @for (int i = 0; i < Model.names.Count && i < Model.movieIDs.Count && i < 1; i++)
+        {
+            @if (Model.movieIDs[i] != null)
+            {
+                <h2>Movies</h2>
+                <hr class="myLine" width=100%>
+            }
+        }
+
+    </div>
+    <form method="post" asp-page-handler="Details" style="padding-left: 55px;">
+        @for (int i = 0; i < Model.posterURLs.Count; i++)
+        {
+            @if (Model.posterURLs[i] != null)
+            {
+                string path = "https://image.tmdb.org/t/p/w500" +
+                    Model.posterURLs[i];
+                <div class="thumbs"
+                     style="background: url(@path); background-size: 100%;">
+                    <input type="submit" class="link" name="movieID"
+                           value="@Model.movieIDs[i]" alt="@Model.titles[i]" title="@Model.titles[i]" />
+                </div>
+            }
+            else
+            {
+                <div class="thumbs"
+                     style="background: grey;  background-image: url('../images/noimage.png'); background-size: 100%;">
+                    <input type="submit" class="link" name="movieID"
+                           value="@Model.movieIDs[i]" alt="@Model.titles[i]" title="@Model.titles[i]" />
+                </div>
+            }   // if
+        } <!-- for -->
+    </form>
+</div> <!-- display of the movies with their posters from the search -->
+
+<div id="videos">
+    @if (Model.videoKeys.Count > 0 && Program.posterSet.results != null)
+    {
+        @if (Model.videoKeys.Count == 1)
+        {
+            @for (int i = 0; i < Model.MAX_VIDS - 1; i++)
+            {
+                <iframe class="youtubeVids" width="672" height="374"
+                        src="https://www.youtube.com/embed/@Model.videoKeys[i]"
+                        frameborder="0"
+                        allow="encrypted-media; picture-in-picture"
+                        allowfullscreen></iframe>
+            } // inner for loop
+        }
+        else if (Model.videoKeys.Count == 2)
+        {
+            @for (int i = 0; i < Model.MAX_VIDS; i++)
+            {
+                <iframe class="youtubeVids" width="504" height="280"
+                        src="https://www.youtube.com/embed/@Model.videoKeys[i]"
+                        frameborder="0"
+                        allow="encrypted-media; picture-in-picture"
+                        allowfullscreen></iframe>
+            } // inner for loop
+        }
+        else if (Model.videoKeys.Count >= 3)
+        {
+            @for (int i = 0; i < Model.MAX_VIDS + 1; i++)
+            {
+                <iframe class="youtubeVids" width="336" height="187"
+                        src="https://www.youtube.com/embed/@Model.videoKeys[i]"
+                        frameborder="0"
+                        allow="encrypted-media; picture-in-picture"
+                        allowfullscreen></iframe>
+            } // inner for loop
+        }
+        else
+        {
+            <h4>Sorry there are no videos available this Title at this time</h4>
+        }
+    }<!-- outter if -->
+</div> <!-- display of the videos from the event of clicking on a poster displayed from the search -->
+
+<div id="movieDetails">
+    @if (Model.movieRuntime > 0) // this fixes it so it only displays once there is a runTime meaning an id has been selected
+    {
+        <div id="runTime">
+            <h4>Run Time</h4>
+            <h5>@Model.movieRuntime minutes</h5>
+        </div>
+        <div>
+            <h2 id="tagLine">@Model.movieTagline</h2>
+        </div>
+        <div id="releaseDate">
+            <h4>Release Date</h4>
+            <h5>@Model.movieReleaseDate</h5>
+        </div>
+        <div id="overview">
+            <h3>Overview</h3>
+            <p>@Model.movieOverview</p>
+        </div>
+    }
+
+
+    <div id="cast" style="text-align: center;">
+        <form method="post" asp-page-handler="ActorInfo">
+            <!-- use this for the URL: https://image.tmdb.org/t/p/w500/ -->
+            @for (int i = 0; i < Model.castPics.Count; i++)
+            {
+                @if (Model.castPics[i] != null)
+                {
+                    <div class="bill">
+
+                        <div class="stackTop">
+                            <img class="pics" src="https://image.tmdb.org/t/p/w500/@Model.castPics[i]" />
+                        </div>
+                        <div class="stackBottom">
+                            <button class="overlayBtn" type="submit" name="actorID" value="@Model.actorIDs[i]">
+                                <h4>@Model.castNames[i]</h4>
+                                <h5>@Model.characterNames[i]</h5>
+                            </button>
+
+                        </div>
+
+                    </div>
+                }
+                else
+                {
+                    <div class="bill">
+                        <div class="stackTop">
+                            <img class="pics" src="~/images/noimage.png" style="background-color: dimgray" />
+                        </div>
+                        <div class="stackBottom">
+                            <button class="overlayBtn" type="submit" name="actorID" value="@Model.actorIDs[i]">
+                                <h4>@Model.castNames[i]</h4>
+                                <h5>@Model.characterNames[i]</h5>
+                            </button>
+                        </div>
+                    </div>
+                }// inner if
+            } <!-- for -->
+        </form>
+    </div> <!-- Cast display section -->
+</div> <!-- Movie Details Section -->
+
+<div id="actorMain">
+    <form method="post" asp-page-handler="ActorInfo">
+        @if (Model.gender != 0)
+        {
+            @if (Model.deathday != null) // this fixes it so it only displays once there is a runTime meaning an id has been selected
+            {
+                <div class="actorGrouping">
+                    <div class="actorHeadShot">
+                        <img class="actorPics" src="https://image.tmdb.org/t/p/w500/@Model.actorPic" />
+                    </div>
+                    <div class="actorInfo">
+                        <div class="actorBirthday">
+                            <h3>Birthday:</h3>
+                            <h4>@Model.birthday</h4>
+                            <h5><a href="https://www.imdb.com/name/@Model.imdbID/?ref_=fn_al_nm_1">IMDB profile</a></h5>
+                        </div>
+                        <div id="actorDeath">
+                            <h3>Passed On:</h3>
+                            <h4>@Model.deathday</h4>
+                        </div>
+                        <div class="actorBio">
+                            <h3>Biography</h3>
+                            @if (Model.placeOfBirth != null)
+                            {
+                                <h4>Born In: @Model.placeOfBirth</h4>
+                            }
+                            <p class="overview">@Model.biography</p>
+                        </div> <!---->
+                    </div> <!-- Actor Info-->
+                </div> <!--Actor grouping-->
+            }
+            else
+            {
+                <div class="actorGrouping">
+                    <div class="actorHeadShot">
+                        <img class="actorPics" src="https://image.tmdb.org/t/p/w500/@Model.actorPic" />
+                    </div>
+                    <div class="actorBirthday">
+                        <h3>Birthday:</h3>
+                        <h4>@Model.birthday</h4>
+                        <h4>Age: @Model.age</h4>
+                        <h4><a href="https://www.imdb.com/name/@Model.imdbID/?ref_=fn_al_nm_1">IMDB profile</a> &nbsp; &nbsp; <a href="https://en.wikipedia.org/wiki/@Model.name">Wiki Page</a></h4>
+                    </div>
+                    <div class="actorBio">
+                        <h3>Biography</h3>
+                        @if (Model.placeOfBirth != null)
+                        {
+                            <h4>Born In: @Model.placeOfBirth</h4>
+                        }
+                        <h4 class="overview">@Model.biography</h4>
+                    </div>
+                </div>
+
+            }
+            <!-- If with divs for the actor info display -->
+
+            <div style="float:left">
+                <!-- Actor Gallery-->
+                <h2>Actor Gallery</h2>
+                @for (int i = 0; i < Model.pictureURLs.Count; i++)
+                {
+                    @if (Model.pictureURLs[i] != null)
+                    {
+                        string path = "https://image.tmdb.org/t/p/w500" +
+                        Model.pictureURLs[i];
+                        <div class="actorPics" style="background: url(@path); background-size: 100%;">
+                        </div>
+                    }
+                    // inner for movies starring in
+                } <!-- for -->
+            </div> <!-- Actor Gallery-->
+
+            <div style="float:left">
+                <!-- Top Grossing Movies -->
+                <h2>Overall Top Grossing Movies</h2>
+                @for (int i = 0; i < Model.starringInURLs.Count; i++)
+                {
+                    @if (Model.starringInURLs[i] != null)
+                    {
+                        string path = "https://image.tmdb.org/t/p/w500" +
+                        Model.starringInURLs[i];
+                        <div class="thumbs" style="background: url(@path); background-size: 100%;">
+                            <input type="submit" class="link" name="movieID" value="@Model.movieIDs[i]" alt="@Model.titles[i]" title="@Model.titles[i]" />
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="thumbs" style="background: grey;  background-image: url('../images/noimage.png'); background-size: 100%;" title="@Model.titles[i]">
+                        </div>
+                    }// if inn for movies starring in
+                } <!-- for -->
+            </div> <!-- Top Grossing Movies -->
+        }
+        else if (Model.gender == 0 && Model.biography != null)
+        {
+            <h2>No information available at this time.</h2>
+        }<!-- outter if to make it only show when actor is loaded-->
+    </form>
+
+</div> <!-- actor full info display -->

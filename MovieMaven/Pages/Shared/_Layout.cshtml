@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Movie Maven</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link href="https://fonts.googleapis.com/css?family=Oxanium&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="~/css/site.css" />
+
+
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" style="padding: 15px">
+        <div id="icon"><img id="mavenIcon" src="~/images/Icon.png" /></div>
+        <div class="container">
+            <div class="navbar-header">
+                <a asp-page="/Index" class="navbar-brand">MovieMaven</a>
+            </div>
+            <div class="navList">
+                <ul>
+                    <li><a asp-page="/Contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="searchDiv" class="navbar">
+            <form id="searchForm" class="form-group" asp-page-handler="GetPosters" method="post">
+                <input class="form-control" type="text" name="search" value="Enter Movie Name" onfocus="this.value = ''"/>
+                <button class="btn btn-primary buttons" id="firstBtn" type="submit" ><img src="~/images/whitesearch.png" style="height: 30px; width: 30px;" /></button> 
+            </form> <!-- intake of the search by user -->
+        </div>
+    </nav>
+
+    <partial name="_CookieConsentPartial" />
+
+    <div class="container body-content">
+        @RenderBody()
+        <footer>
+            <hr class="myLine" width=100%>
+            <div id="tradeMark">
+                <p>&copy; 2020 - MovieMaven </p>
+            </div>
+            <div id="footerLinks">
+                <p> <a asp-page="/Contact">Contact</a> &nbsp;&nbsp; <a asp-page="/Privacy">Privacy</a> </p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+            asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+            asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+            crossorigin="anonymous"
+            integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd">
+    </script>
+    <script src="~/js/site.min.js" asp-append-version="true"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
