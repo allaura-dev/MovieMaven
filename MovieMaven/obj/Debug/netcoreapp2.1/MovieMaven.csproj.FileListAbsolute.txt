@@ -33,3 +33,5 @@ C:\Users\allie\source\repos\MovieMaven\MovieMaven\obj\Debug\netcoreapp2.1\MovieM
 C:\Users\allie\source\repos\MovieMaven\MovieMaven\obj\Debug\netcoreapp2.1\MovieMaven.csproj.CopyComplete
 C:\Users\allie\source\repos\MovieMaven\MovieMaven\obj\Debug\netcoreapp2.1\Razor\Pages\TermsOfUse.cshtml.g.cs
 C:\Users\allie\source\repos\MovieMaven\MovieMaven\obj\Debug\netcoreapp2.1\Razor\Pages\RabbitHole.cshtml.g.cs
+C:\Users\allie\source\repos\MovieMaven\MovieMaven\obj\Debug\netcoreapp2.1\Razor\Pages\RabbitHole2.cshtml.g.cs
+C:\Users\allie\source\repos\MovieMaven\MovieMaven\obj\Debug\netcoreapp2.1\Razor\Pages\NoMatch.cshtml.g.cs

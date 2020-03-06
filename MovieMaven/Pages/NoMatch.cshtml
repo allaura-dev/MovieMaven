@@ -1,0 +1,12 @@
+﻿@page
+@model MovieMaven.Pages.NoMatchModel
+
+
+<body onload="javascript:setTimeout('backToIndex();', 5000)">
+    <h1>No Matching Results</h1>
+
+    <h3>You Have entered information that does not have a match</h3>
+    <br />
+
+    <h2 style="clear:both; padding-top: 50px;">Please <a asp-page="/Index" style="color: #080838;">Refresh</a> the page if it does not refresh in 5 seconds.</h2>
+</body>

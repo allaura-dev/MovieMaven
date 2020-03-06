@@ -56,7 +56,7 @@ using MovieMaven;
 <p>By accessing our Site or our Service, you accept our Privacy Policy and Terms of Use (found here: ");
             EndContext();
             BeginContext(865, 42, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3a0c0f2fdce740a99dbc3752ed351180", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8458fb9cc1d34a3f99fe3097a8345702", async() => {
                 BeginContext(891, 12, true);
                 WriteLiteral("Terms Of Use");
                 EndContext();
@@ -83,7 +83,7 @@ using MovieMaven;
             WriteLiteral(@"ng URL”), the type of browser you use, the device from which you connected to the Service, the time and date of access, and other information that does not personally identify you. We track this information using cookies, or small text files which include an anonymous unique identifier. Cookies are sent to a user’s browser from our servers and are stored on the user’s computer hard drive. Sending a cookie to a user’s browser enables us to collect Non-Personal information about that user and keep a record of the user’s preferences when utilizing our services, both on an individual and aggregate basis. For example, the Company may use cookies to collect the following information: <br />Please check ");
             EndContext();
             BeginContext(2637, 55, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "77d6be4b7e054ede84fa5fd7bd3cbb97", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b01db0c522614363baf1f0f65152dbd0", async() => {
                 BeginContext(2674, 14, true);
                 WriteLiteral("Cookie Consent");
                 EndContext();

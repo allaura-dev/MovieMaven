@@ -3,7 +3,7 @@
 
 
 <div class="posters">
-    <form method="post" asp-page-handler="Details" style="padding-left: 55px; margin-left: 15px;">
+    <form method="post" asp-page-handler="Details" class="posterForms">
         @for (int i = 0; i < Model.inTheatreURLs.Count; i++)
         {
             @if (Model.inTheatreURLs[i] != null)
@@ -18,21 +18,19 @@
     </form>
 </div> <!-- OnLoad of page in theatres soon -->
 
-
-
 <div id="cast">
     <div class="headingResults">
         @for (int i = 0; i < Model.names.Count && i < Model.movieIDs.Count && i < 1; i++)
         {
             @if (Model.names[i] != null)
             {
-                <h2>Actors</h2>
+                <h2 style="padding-right: 55px">Actors</h2>
                 <hr class="myLine" width=100%>
             }
         }
 
     </div>
-    <form method="post" asp-page-handler="ActorInfo" style="text-align:center; padding-left: 50px;">
+    <form method="post" asp-page-handler="ActorInfo" class="actorForms">
         <!-- use this for the URL: https://image.tmdb.org/t/p/w500/ -->
         @for (int i = 0; i < Model.picsOfActors.Count; i++)
         {
@@ -69,20 +67,19 @@
     </form>
 </div> <!-- Actor search display section -->
 
-
 <div class="posters">
     <div class="headingResults">
         @for (int i = 0; i < Model.names.Count && i < Model.movieIDs.Count && i < 1; i++)
         {
             @if (Model.movieIDs[i] != null)
             {
-                <h2>Movies</h2>
+                <h2 style="padding-right: 55px">Movies</h2>
                 <hr class="myLine" width=100%>
             }
         }
 
     </div>
-    <form method="post" asp-page-handler="Details" style="padding-left: 55px;">
+    <form method="post" asp-page-handler="Details" class="posterForms">
         @for (int i = 0; i < Model.posterURLs.Count; i++)
         {
             @if (Model.posterURLs[i] != null)
@@ -92,7 +89,7 @@
                 <div class="thumbs"
                      style="background: url(@path); background-size: 100%;">
                     <input type="submit" class="link" name="movieID"
-                           value="@Model.movieIDs[i]" alt="@Model.titles[i]"  title="@Model.titles[i]"/>
+                           value="@Model.movieIDs[i]" alt="@Model.titles[i]" title="@Model.titles[i]" />
                 </div>
             }
             else
@@ -107,7 +104,20 @@
     </form>
 </div> <!-- display of the movies with their posters from the search -->
 
-<div id="videos">
+<div class="movieTitle">
+    <form asp-page-handler="Details">
+        @for (int i = 0; i < Model.titles.Count && i < Model.actorIDs.Count && Model.movieOverview != null && i < 1; i++)
+        {
+            @if (Model.titles[i] != null)
+            {
+                <h1 style="padding-right: 55px">@Model.titles[i]</h1>
+                <hr class="myLine" width=100%>
+            }
+        }
+    </form>
+</div> <!-- Gets movie title on details page -->
+
+<div class="videos">
     @if (Model.showingVideoKeys.Count > 0 && Program.inTheatres.results != null)
     {
         @if (Model.showingVideoKeys.Count == 1)
@@ -190,21 +200,21 @@
     }<!-- outter if -->
 </div> <!-- display of the videos from the event of clicking on a poster displayed from the search -->
 
-<div id="movieDetails">
+<div class="movieDetails">
     @if (Model.movieRuntime > 0) // this fixes it so it only displays once there is a runTime meaning an id has been selected
     {
-        <div id="runTime">
+        <div class="runTime">
             <h4>Run Time</h4>
             <h5>@Model.movieRuntime minutes</h5>
         </div>
         <div>
-            <h2 id="tagLine">@Model.movieTagline</h2>
+            <h2 class="tagLine">@Model.movieTagline</h2>
         </div>
-        <div id="releaseDate">
+        <div class="releaseDate">
             <h4>Release Date</h4>
             <h5>@Model.movieReleaseDate</h5>
         </div>
-        <div id="overview">
+        <div class="overview">
             <h3>Overview</h3>
             <p>@Model.movieOverview</p>
         </div>
@@ -212,7 +222,7 @@
 
 
     <div id="cast" style="text-align: center;">
-        <form method="post" asp-page-handler="ActorInfo">
+        <form method="post" asp-page-handler="ActorInfo" class="actorForms">
             <!-- use this for the URL: https://image.tmdb.org/t/p/w500/ -->
             @for (int i = 0; i < Model.castPics.Count; i++)
             {
@@ -246,13 +256,13 @@
                             </button>
                         </div>
                     </div>
-                }  // inner if
+                }// inner if
             } <!-- for -->
         </form>
     </div> <!-- Cast display section -->
 </div> <!-- Movie Details Section -->
 
-<div id="actorMain">
+<div class="actorMain">
     <form method="post" asp-page-handler="RabbitHole">
         @if (Model.gender != 0)
         {
@@ -268,7 +278,10 @@
                             <h4>@Model.birthday</h4>
                             <h5><a href="https://www.imdb.com/name/@Model.imdbID/?ref_=fn_al_nm_1">IMDB profile</a></h5>
                         </div>
-                        <div id="actorDeath">
+                        <div class="actorName">
+                            <h2>@Model.name</h2>
+                        </div>
+                        <div class="actorDeath">
                             <h3>Passed On:</h3>
                             <h4>@Model.deathday</h4>
                         </div>
@@ -295,6 +308,9 @@
                         <h4>Age: @Model.age</h4>
                         <h4><a href="https://www.imdb.com/name/@Model.imdbID/?ref_=fn_al_nm_1">IMDB profile</a> &nbsp; &nbsp; <a href="https://en.wikipedia.org/wiki/@Model.name">Wiki Page</a></h4>
                     </div>
+                    <div class="actorName">
+                        <h2>@Model.name</h2>
+                    </div>
                     <div class="actorBio">
                         <h3>Biography</h3>
                         @if (Model.placeOfBirth != null)
@@ -308,7 +324,7 @@
             }
             <!-- If with divs for the actor info display -->
 
-            <div style="float:left">
+            <div class="actorForms">
                 <!-- Actor Gallery-->
                 <h2>Actor Gallery</h2>
                 @for (int i = 0; i < Model.pictureURLs.Count; i++)
@@ -324,7 +340,7 @@
                 } <!-- for -->
             </div> <!-- Actor Gallery-->
 
-            <div style="float:left">
+            <div class="posterForms">
                 <!-- Top Grossing Movies -->
                 <h2>Overall Top Grossing Movies</h2>
                 @for (int i = 0; i < Model.starringInURLs.Count; i++)
@@ -334,13 +350,13 @@
                         string path = "https://image.tmdb.org/t/p/w500" +
                         Model.starringInURLs[i];
                         <div class="thumbs" style="background: url(@path); background-size: 100%;">
-                            <input type="submit" class="link" name="movieID" value="@Model.movieIDs[i]" alt="@Model.titles[i]" title="@Model.titles[i]"/>
+                            <input type="submit" class="link" name="starringInMovieID" value="@Model.starringInMovieIDs[i]" alt="@Model.titles[i]" title="@Model.titles[i]" />
                         </div>
                     }
                     else
                     {
                         <div class="thumbs" style="background: grey;  background-image: url('../images/noimage.png'); background-size: 100%;">
-                            <input type="submit" class="link" name="movieID" value="@Model.movieIDs[i]" alt="@Model.titles[i]" title="@Model.titles[i]"/>
+                            <input type="submit" class="link" name="starringInMovieID" value="@Model.starringInMovieIDs[i]" alt="@Model.titles[i]" title="@Model.titles[i]" />
                         </div>
                     }// if inn for movies starring in
                 } <!-- for -->

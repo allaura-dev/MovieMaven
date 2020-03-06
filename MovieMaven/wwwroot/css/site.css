@@ -115,15 +115,16 @@ ul {
     padding: 0;
 }
 
-#firstBtn {
-    border-bottom-left-radius: 0;
-    border-top-left-radius: 0;
-    border-bottom-right-radius: 10px;
-    border-top-right-radius: 10px;
-}
-
 .headingResults {
     text-align: center;
+    margin-left: 15px;
+}
+
+.movieTitle {
+    text-align: center;
+    margin-left: 15px;
+    font-weight: bold;
+    clear: both;
 }
 
 .myLine {
@@ -150,30 +151,34 @@ ul {
     border-radius: 12px;
 }
 
-#runTime {
+.runTime {
     float: left;
     width: 20%;
 }
 
-#tagLine {
+.tagLine {
     float: left;
     width: 60%;
     text-align: center;
 }
 
-#releaseDate {
+.releaseDate {
     float: right;
     width: 20%;
     text-align: right;
 }
 
-#overview {
+.overview {
     padding: 10px;
     clear: both;
 }
 
-#cast {
+.cast {
     text-align: center;
+}
+
+.actorMain {
+    float: left;
 }
 
 .bill {
@@ -230,8 +235,11 @@ ul {
     opacity: 0;
 }
 
-#videos {
+.videos {
     text-align: center;
+    width: 100%;
+    float: left;
+    margin-right: 15px;
 }
 
 .youtubeVids {
@@ -278,17 +286,25 @@ ul {
         color: #080838;
     }
 
-#actorDeath {
+.actorDeath {
     float: right;
     text-align: right;
+    background: #7F8090;
+}
+
+.actorName {
+    float:left; 
+    text-align:right; 
+    width: 30%;
 }
 
 .actorBio {
-    width: 80%;
+    width: 79%;
     max-height: 250px;
     float: right;
     overflow-y: scroll;
     text-align: left;
+    background: #7F8090;
 }
 
 .actorPics {
@@ -299,6 +315,34 @@ ul {
     border-radius: 25px;
     float: left;
 }
+
+.posterForms {
+    padding-left: 55px; 
+    margin: 15px; 
+    float: left;
+}
+
+.actorForms {
+    text-align:center; 
+    padding-left: 55px;
+    float: left;
+}
+    .actorForms > h2 {
+        text-align: left;
+    }
+
+#errorList {
+    float: left;
+    margin: 0;
+    position: unset;
+    padding: 0;
+}
+    #errorList > li {
+        float: left;
+        list-style: square;
+        clear:both;
+        padding: 5px;
+    }
 
 footer {
     padding-top: 15px;

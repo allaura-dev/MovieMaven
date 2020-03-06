@@ -10,7 +10,7 @@ using System.Threading;
 
 namespace MovieMaven.Pages
 {
-    public class ErrorModel : PageModel
-    {    
+    public class NoMatchModel : PageModel
+    {
     } // class
 } // namespace

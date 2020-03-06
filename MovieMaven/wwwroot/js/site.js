@@ -3,5 +3,8 @@
 
 // Write your Javascript code.
 
+function backToIndex() {
+    document.location.href = '/';
+}
 
 

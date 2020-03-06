@@ -12,6 +12,14 @@ namespace MovieMaven.Pages
 {
     public class RabbitHoleModel : PageModel
     {
+        //all needed if poster is from now showing or if search is done need all bases covered
+        // in theatres data
+        public List<string> inTheatreURLs = new List<string>();
+        public List<string> showingMovieIDs = new List<string>();
+        public List<string> showingVideoNames = new List<string>();
+        public List<string> showingVideoKeys = new List<string>();
+        public List<string> languages = new List<string>();
+
         //search
         public string searchTerm = Temp.searchTerm;
 
@@ -55,43 +63,103 @@ namespace MovieMaven.Pages
         public string placeOfBirth;
         public string knownFor;
         public List<string> pictureURLs = new List<string>();
+        public List<string> starringInMovieIDs = new List<string>();
         public List<string> starringInURLs = new List<string>();
         public string imdbID;
         public string nobody = "No information available at this time.";
 
 
+        public async Task OnGet(string movieID)
+        {
+            await Fetch.GetMovieDetails(movieID);
+
+
+            if (showingMovieIDs.Count >= 0 && inTheatreURLs.Count >= 0)
+            {
+                foreach (Trailer trailer in Program.trailerSet.results)
+                {
+                    showingVideoNames.Add(trailer.name);
+                    showingVideoKeys.Add(trailer.key);
+                }
+            }
+            else if (movieIDs.Count > 0 && posterURLs.Count >= 0)
+            {
+                foreach (Video video in Program.videoSet.results)
+                {
+                    videoNames.Add(video.name);
+                    videoKeys.Add(video.key);
+                }
+            }
+
+            movieOverview = Program.movie.overview;
+            movieRuntime = Program.movie.runtime;
+            movieTagline = Program.movie.tagline;
+            movieReleaseDate = Program.movie.release_date;
+
+            for (int i = 0; i < Program.credits.cast.Count; i++)
+            {
+                castPics.Add(Program.credits.cast[i].profile_path);
+                actorIDs.Add(Program.credits.cast[i].id);
+                castNames.Add(Program.credits.cast[i].name);
+                characterNames.Add(Program.credits.cast[i].character);
+            }
+        } // OnGet()
+
         public async Task OnPostGetPosters(string search)
         {
             if (Temp.searchTerm != null && search == null)
                 search = Temp.searchTerm;
-            await Fetch.GrabPosterAsync(search); // this is in the Fetch.cs and is a method called from there
-            foreach (Poster poster in Program.posterSet.results)
+
+            await Fetch.GrabPosterAsync(search);
+            await Fetch.GrabActorAsync(search);
+
+            if (movieIDs.Count > 0)
             {
-                posterURLs.Add(poster.poster_path); // the second part of the Add method is in the models 
-                overviews.Add(poster.overview);
-                movieIDs.Add(poster.id.ToString());
-                titles.Add(poster.title);
+                foreach (Poster poster in Program.posterSet.results)
+                {
+                    posterURLs.Add(poster.poster_path); // the second part of the Add method is in the models 
+                    overviews.Add(poster.overview);
+                    movieIDs.Add(poster.id.ToString());
+                    titles.Add(poster.title);
+                }
+                Temp.searchTerm = search;
+
+                foreach (ActorSearchResult actorSearchResult in Program.actorSearchSet.results)
+                {
+                    picsOfActors.Add(actorSearchResult.profile_path); // the second part of the Add method is in the models 
+                    actorIDs.Add(actorSearchResult.id);
+                    names.Add(actorSearchResult.name);
+                }
+
             }
-            Temp.searchTerm = search;
-
-            await Fetch.GrabActorAsync(search); // this is in the Fetch.cs and is a method called from there
-
-            foreach (ActorSearchResult actorSearchResult in Program.actorSearchSet.results)
+            else
             {
-                picsOfActors.Add(actorSearchResult.profile_path); // the second part of the Add method is in the models 
-                actorIDs.Add(actorSearchResult.id);
-                names.Add(actorSearchResult.name);
-
+                NoMatch();
             }
+
             Temp.searchTerm = search;
+            if (Temp.searchTerm == "Enter Movie Name or Actor Name")
+            {
+                GetError();
+            }
         } // OnPostGetPosters()
+
+
 
         public async Task OnPostDetails(string movieID)
         {
             await Fetch.GetMovieDetails(movieID);
 
 
-            if (movieIDs.Count > 0 && posterURLs.Count >= 0)
+            if (showingMovieIDs.Count >= 0 && inTheatreURLs.Count >= 0)
+            {
+                foreach (Trailer trailer in Program.trailerSet.results)
+                {
+                    showingVideoNames.Add(trailer.name);
+                    showingVideoKeys.Add(trailer.key);
+                }
+            }
+            else if (movieIDs.Count > 0 && posterURLs.Count >= 0)
             {
                 foreach (Video video in Program.videoSet.results)
                 {
@@ -114,9 +182,9 @@ namespace MovieMaven.Pages
             }
         } // OnPostDetails()
 
-        public void OnPostRabbitHole(string movieID)
+        public void OnPostRabbitHole2(string starringInMovieID) // step 2 into rabbit hole
         {
-            Response.Redirect("./RabbitHole?id=" + movieID);
+            Response.Redirect("./RabbitHole2?movieID=" + starringInMovieID);
         } // RabbitHole(); goes down the rabit hold of continuosly being able to click on posters from actor
 
         public async Task OnPostActorInfo(string actorID)
@@ -136,7 +204,7 @@ namespace MovieMaven.Pages
             for (int i = 0; i < Program.starringInSet.results.Count; i++)
             {
                 starringInURLs.Add(Program.starringInSet.results[i].poster_path);
-                movieIDs.Add(Program.starringInSet.results[i].poster_path);
+                starringInMovieIDs.Add(Program.starringInSet.results[i].id.ToString());
                 titles.Add(Program.starringInSet.results[i].title);
             }
 
@@ -169,5 +237,15 @@ namespace MovieMaven.Pages
 
             imdbID = Program.actor.imdb_id;
         } // Get ActorInfo
+
+        public void GetError()
+        {
+            Response.Redirect("./Error");
+        } //GetError()
+
+        public void NoMatch()
+        {
+            Response.Redirect("./NoMatch");
+        } // NoMatch()
     } // class
-}
+} // namespace
